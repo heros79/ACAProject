@@ -6,15 +6,19 @@ package am.lad.shop.model;
 public class Product {
 
     private Long id;
-    private String articul;
+    private String vendorCode;
     private String productName;
     private Integer count;
+    private Double price;
+    private String description;
 
-    public Product(Long id, String articul, String productName, Integer count) {
+    public Product(Long id, String vendorCode, String productName, Integer count, Double price, String description) {
         this.id = id;
-        this.articul = articul;
+        this.vendorCode = vendorCode;
         this.productName = productName;
         this.count = count;
+        this.price = price;
+        this.description = description;
     }
 
     public Long getId() {
@@ -25,12 +29,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getArticul() {
-        return articul;
+    public String getVendorCode() {
+        return vendorCode;
     }
 
-    public void setArticul(String articul) {
-        this.articul = articul;
+    public void setVendorCode(String vendorCode) {
+        this.vendorCode = vendorCode;
     }
 
     public String getProductName() {
@@ -47,5 +51,56 @@ public class Product {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == null)
+            return false;
+
+        if (this == obj)
+            return true;
+
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Product other = (Product) obj;
+
+        if (!other.vendorCode.equals(((Product) obj).vendorCode))
+            return false;
+
+        if (!other.productName.equals(((Product) obj).productName))
+            return false;
+
+        if ((int)other.count != ((Product) obj).count)
+            return false;
+
+        if ((double)other.price != ((Product) obj).price)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return vendorCode.hashCode() * 31 + 17 + id.intValue() * 33 +15;
     }
 }
