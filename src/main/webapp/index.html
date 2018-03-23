@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Register page</title>
+
+
+</head>
+<body>
+<form action="register" method="get" name="registerForm">
+    Enter login:
+    <input name="login" type="text" /> </br>
+    Enter password:
+    <input name="passH" type="text" /> </br>
+    Enter firstName:
+    <input name="firstName" type="text" /> </br>
+    Enter lastName:
+    <input name="lastName" type="text" /> </br>
+    Enter e-mail:
+    <input name="email" type="text" /> </br>
+
+    <input type="submit" value="Register" />
+
+</form>
+
+<!--<form action="addProduct" method="post" enctype="multipart/form-data">
+    <div>
+        <label for="image_uploads">Choose images to upload (PNG, JPG)</label>
+        <input type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" multiple>
+    </div>
+    <div class="preview">
+        <p>No files currently selected for upload</p>
+    </div>
+    <div>
+        <button>Submit</button>
+    </div>-->
+
+    <form method="POST" action="addProduct" enctype="multipart/form-data" id="uploadForm">
+        <input type="file" name="file" id="file"/>
+        <input type="submit" value="Upload" name="upload" id="upload"/>
+    </form>
+</form>
+</body>
+</html>
+

@@ -9,13 +9,30 @@ import static java.sql.DriverManager.*;
 /**
  * Created by David on 3/15/2018.
  */
-public final class DBConn {
+public class DBConn {
 
-    private static DBConn instance;
-    public static Connection conn = null;
+//    private static DBConn instance;
+ //   private Connection conn = null;
 
-    private DBConn() throws SQLException {
-        conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/onlineshop", "root","1111");
+
+    public static Connection getConnection() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/onlineshop", "root","1111");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+/*    private DBConn() throws SQLException {
+        //conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/onlineshop", "root","1111");
     }
 
     public static DBConn getInstance () {
@@ -26,6 +43,6 @@ public final class DBConn {
                 e.printStackTrace();
             }
         return instance;
-    }
+    }*/
 
 }

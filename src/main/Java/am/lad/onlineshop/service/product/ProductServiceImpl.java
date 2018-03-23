@@ -19,7 +19,9 @@ public class ProductServiceImpl implements ProductService {
 
     public void save(Product product) throws SQLException {
 
-        statement = DBConn.conn.prepareStatement("INSERT INTO " +
+        Connection conn = new DBConn().getConnection();
+
+        statement = conn.prepareStatement("INSERT INTO " +
         "products VALUE (?, ?, ?, ?, ?)");
         statement.setNull(1, NULL);
         statement.setString(2, product.getVendorCode());
@@ -29,39 +31,43 @@ public class ProductServiceImpl implements ProductService {
 
         statement.executeUpdate();
 
-        DBConn.conn.close();
+        conn.close();
     }
 
     public void change(Product product, String productName, Double price) throws SQLException {
 
+        Connection conn = new DBConn().getConnection();
+
         if (productName != null)
-            statement = DBConn.conn.prepareStatement("UPDATE products SET productname =" +
+            statement = conn.prepareStatement("UPDATE products SET productname =" +
                     productName + "WHERE vendorcode =" + product.getVendorCode());
         if (price != null)
-            statement = DBConn.conn.prepareStatement("UPDATE products SET price =" +
+            statement = conn.prepareStatement("UPDATE products SET price =" +
                     price + "WHERE vendorcode =" + product.getVendorCode());
 
         statement.executeUpdate();
 
-        DBConn.conn.close();
+        conn.close();
     }
 
     public List<Product> findAll() throws SQLException {
 
+        Connection conn = new DBConn().getConnection();
+
         productsList = new ArrayList<Product>();
-        statement = DBConn.conn.prepareStatement("SELECT * FROM products");
+        statement = conn.prepareStatement("SELECT * FROM products");
 
         ResultSet result = statement.executeQuery();
 
         while (result.next())
             productsList.add(new Product(
-                    result.getInt(1),
+                    result.getLong(1),
                     result.getString(2),
                     result.getString(3),
                     result.getDouble(4),
                     result.getString(5)));
 
-        DBConn.conn.close();
+        conn.close();
 
 
         return productsList;
@@ -69,8 +75,10 @@ public class ProductServiceImpl implements ProductService {
 
     public Product findByVendoreCode(String vendoreCode) throws SQLException {
 
+        Connection conn = new DBConn().getConnection();
+
         Product product = null;
-        statement = DBConn.conn.prepareStatement("SELECT * FROM products " +
+        statement = conn.prepareStatement("SELECT * FROM products " +
                 "WHERE vendorecode = ?");
 
         statement.setString(1, vendoreCode);
@@ -79,18 +87,32 @@ public class ProductServiceImpl implements ProductService {
 
         while (result.next())
             product = new Product(
-                    result.getInt(1),
+                    result.getLong(1),
                     result.getString(2),
                     result.getString(3),
                     result.getDouble(4),
                     result.getString(5));
 
-        DBConn.conn.close();
+        conn.close();
 
         return product;
     }
 
     public List<Product> getProductsList() {
         return productsList;
+    }
+
+    private int getProductId(String vendoreCode) throws SQLException {
+
+        Connection conn = new DBConn().getConnection();
+
+        statement = conn.prepareStatement("SELECT id FROM products WHERE vendorecode = ?");
+        statement.setString(1, vendoreCode);
+
+        ResultSet result = statement.executeQuery();
+
+        result.next();
+
+        return result.getInt("id");
     }
 }

@@ -1,8 +1,8 @@
-CREATE DATABASE onlineshop;
+/*CREATE DATABASE onlineshop;*/
 
 USE onlineshop;
 
-CREATE TABLE products (
+/*CREATE TABLE products (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   vendorecode VARCHAR(255) NOT NULL,
   productname VARCHAR(255) NOT NULL,
@@ -43,4 +43,23 @@ INSERT INTO  productactions VALUE (NULL, 2, 50, CURDATE(), NULL);
 INSERT INTO  productactions VALUE (NULL, 2, -29, NULL, CURDATE());
 INSERT INTO  productactions VALUE (NULL, 1, 17, CURDATE(), NULL);
 INSERT INTO  productactions VALUE (NULL, 3, 100, CURDATE(), NULL);
-INSERT INTO  productactions VALUE (NULL, 4, 150, CURDATE(), NULL);
+INSERT INTO  productactions VALUE (NULL, 4, 150, CURDATE(), NULL);*/
+
+/*CREATE TABLE useratributes (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  firstname VARCHAR(50) NOT NULL,
+  lastname VARCHAR(50) NOT NULL,
+  email VARCHAR(100) NOT NULL
+)
+  ENGINE = InnoDB;*/
+
+CREATE TABLE users (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  useratr_id INT NOT NULL,
+  login VARCHAR(50),
+  pash VARCHAR(100),
+  role ENUM ("ROLE_USER", "ROLE_ADMIN") NOT NULL,
+
+  FOREIGN KEY (useratr_id) REFERENCES useratributes (id)
+)
+  ENGINE = InnoDB;
